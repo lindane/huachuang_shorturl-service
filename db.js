@@ -31,9 +31,21 @@ function createTable() {
   `);
 }
 
+function countUrls() {
+  const stmt = db.prepare('SELECT COUNT(*) AS count FROM urls');
+  return stmt.get().count;
+}
+
+function getRecentUrls(limit) {
+  const stmt = db.prepare('SELECT code, original_url FROM urls ORDER BY created_at DESC LIMIT ?');
+  return stmt.all(limit);
+}
+
 module.exports = {
   insertUrl,
   findUrlByCode,
   findUrlByOriginalUrl,
-  createTable
+  createTable,
+  countUrls,
+  getRecentUrls
 };
