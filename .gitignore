@@ -1,0 +1,22 @@
+# 编译产物 / 可执行文件
+*.exe
+*.out
+*.app
+note
+url-shortener
+dist/
+build/
+node_modules/
+__pycache__/
+*.pyc
+*.so
+*.dylib
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# 数据库文件（本地测试用）
+*.db
