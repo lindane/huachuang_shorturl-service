@@ -18,11 +18,19 @@ function generateShortCode() {
   return code;
 }
 
+function isValidUrl(url) {
+  return /^https?:\/\//.test(url);
+}
+
 app.post('/api/shorten', (req, res) => {
   const { url } = req.body;
 
   if (!url) {
     return res.status(400).json({ error: 'URL is required' });
+  }
+
+  if (!isValidUrl(url)) {
+    return res.status(400).json({ error: 'Invalid URL format. URL must start with http:// or https://' });
   }
 
   const existing = db.findUrlByOriginalUrl(url);
@@ -60,6 +68,8 @@ app.get('/:code', (req, res) => {
     res.status(404).send('404 Not Found');
   }
 });
+
+db.createTable();
 
 app.listen(PORT, () => {
   console.log(`Short URL service running on http://localhost:${PORT}`);
